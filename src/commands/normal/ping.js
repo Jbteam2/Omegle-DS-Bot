@@ -31,7 +31,6 @@ module.exports = {
           message.reply({ embeds: [exampleEmbed] })
         } else {
           client.users.send(user[z][3], `Stranger: ${message.content}`);
-          console.log(`User: ${userid}, Said: ${message.content}`)  
         }
       }
     }
