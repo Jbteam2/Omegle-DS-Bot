@@ -49,7 +49,6 @@ module.exports = {
                         wwork = work
                     }
                 }
-                console.log(`Max age = ${agemax} Current age = ${i}`)
             }
             work = wwork
             if (!work){
@@ -66,7 +65,6 @@ module.exports = {
                 setlists('./users.json', user)
             }
             
-            console.log(work)
             if (work) {
                 user[useraddress][2] = true
                 user[useraddress][3] = work
@@ -95,7 +93,6 @@ module.exports = {
                 .setFooter({ text: 'Developed by Oreo'});
                 client.users.send(work, { embeds: [exampleEmbed2] });  
                 setlists('./users.json', user)
-                
                 if (config.cagatoryid != ""){
                     const serverId = config.serverid; // Replace with your server's ID
                     const guild = client.guilds.cache.get(serverId);
@@ -141,13 +138,11 @@ function getlists(FP) {
     } catch (error) {
     console.error('Error loading list data:', error);
     }
-    console.warn(listData)
     return listData
  }
  function setlists(FP, LI) {
     try {
         fs.writeFileSync(FP, JSON.stringify(LI, null, 2), 'utf8');
-        console.log('List data updated and saved successfully.');
       } catch (error) {
         console.error('Error saving list data:', error);
       }

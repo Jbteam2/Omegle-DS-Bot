@@ -89,13 +89,11 @@ function getlists(FP) {
     } catch (error) {
     console.error('Error loading list data:', error);
     }
-    console.warn(listData)
     return listData
  }
  function setlists(FP, LI) {
     try {
         fs.writeFileSync(FP, JSON.stringify(LI, null, 2), 'utf8');
-        console.log('List data updated and saved successfully.');
       } catch (error) {
         console.error('Error saving list data:', error);
       }
