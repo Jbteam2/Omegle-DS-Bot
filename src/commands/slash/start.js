@@ -1,6 +1,8 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const fs = require('fs');
+const Discord = require("discord.js");
+const config = require("../../config.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -93,7 +95,39 @@ module.exports = {
                 .setFooter({ text: 'Developed by Oreo'});
                 client.users.send(work, { embeds: [exampleEmbed2] });  
                 setlists('./users.json', user)
-            }
+                
+                if (config.cagatoryid != ""){
+                    const serverId = config.serverid; // Replace with your server's ID
+                    const guild = client.guilds.cache.get(serverId);
+                    const ChannelType = Discord.ChannelType;
+                    if (!guild) {
+                    console.error(`Server with ID ${serverId} not found.`);
+                    return;
+                    }
+                    let user2 = client.users.cache.get(user[otherpersonaddress][0]);
+                    tsety = `${interaction.user.username}_${user2.username}`;
+        
+                    channel2 = guild.channels.cache.find(channel => channel.name === tsety);
+                    
+                    if (!channel2) {
+                    tsety = `${user2.username}_${interaction.user.username}`;
+                    channel2 = guild.channels.cache.find(channel => channel.name === tsety);
+                    }
+                    if(!channel2){
+                    channel2 = await guild.channels.create({
+                    name: tsety,
+                    type: ChannelType.GuildText,
+                    })
+                    await channel2.setParent(config.cagatoryid);
+                    }
+
+                    const exampleEmbed24 = new EmbedBuilder()
+                    .setColor(0x0099FF)
+                    .setTitle('Pair Matched')
+                    .setTimestamp()
+                    .setFooter({ text: 'Developed by Oreo'});
+                    await channel2.send({ embeds: [exampleEmbed24]})
+                }}
         }}
       }
 };

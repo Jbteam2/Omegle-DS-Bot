@@ -1,6 +1,6 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js");
 const fs = require('fs');
-const channelid = "1147865233172463617"
+const config = require("../../config.js");
 
 module.exports = {
     name: "ping",
@@ -32,19 +32,21 @@ module.exports = {
           message.reply({ embeds: [exampleEmbed] })
         } else {
           client.users.send(user[z][3], `Stranger: ${message.content}`);
-          if (channelid != "") {
-            const channel = await client.channels.cache.get(channelid)
+          if (config.cagatoryid != ""){
+            const guild = client.guilds.cache.get(config.serverid);
             let user2 = client.users.cache.get(user[z][3]);
-            const embed2 = new EmbedBuilder()
-            .setColor("Orange")
-            .addFields({ name: 'Member', value: `${message.author.username}`})
-            .addFields({ name: 'Chat Command', value: `${message.content}`})
-            .addFields({ name: 'Message to:', value: `${user2.username}`})
-            .setTimestamp()
-            .setFooter({ text: 'Developed By Oreo'})
-            channel.send({ embeds: [embed2] });
-        }
-        }
+
+            tsety = `${message.author.username}_${user2.username}`;
+
+            channel = guild.channels.cache.find(channel => channel.name === tsety);
+            
+            if (!channel) {
+              tsety = `${user2.username}_${message.author.username}`;
+              channel = guild.channels.cache.find(channel => channel.name === tsety);
+            }
+  
+            await channel.send(`${message.author.username} : ${message.content}`)
+          }}
       }
     }
  };

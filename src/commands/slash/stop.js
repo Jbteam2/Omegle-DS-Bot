@@ -1,7 +1,7 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const fs = require('fs');
-const { clear } = require("console");
+const config = require("../../config.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -42,6 +42,29 @@ module.exports = {
                     user[test][2] = false
                     user[test][3] = ""
                     user[test][4] = false
+                    const serverId = config.serverid; // Replace with your server's ID
+                    const guild = client.guilds.cache.get(serverId);
+                    if (!guild) {
+                    console.error(`Server with ID ${serverId} not found.`);
+                    return;
+                    }
+                    let user2 = client.users.cache.get(user[useraddress][3]);
+                    tsety = `${interaction.user.username}_${user2.username}`;
+        
+                    channel2 = guild.channels.cache.find(channel => channel.name === tsety);
+                    
+                    if (!channel2) {
+                    tsety = `${user2.username}_${interaction.user.username}`;
+                    channel2 = guild.channels.cache.find(channel => channel.name === tsety);
+                    }
+                    if(channel2) {
+                      const exampleEmbed = new EmbedBuilder()
+                      .setColor(0x0099FF)
+                      .setTitle('Pair Unmatched')
+                      .setTimestamp()
+                      .setFooter({ text: 'Developed by Oreo'});
+                      channel2.send({ embeds: [exampleEmbed] });  
+                    }
                 }
                 user[useraddress][2] = false
                 user[useraddress][3] = ""
