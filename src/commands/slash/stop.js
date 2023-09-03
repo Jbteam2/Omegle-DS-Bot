@@ -77,18 +77,3 @@ function getlists(FP) {
         console.error('Error saving list data:', error);
       }
  }
-
- function lookforage(userlist, age, useraddress) {
-    z = 0
-    for (var i = 0; i < userlist.length; i++) {
-        if (i != useraddress){
-      if (user[i][1] === age){
-        if (user[i][4]){
-          z = user[i][0]
-        }}}}
-    if (z === 0) {
-        return false;
-    } else {
-        return z;
-    }
- }

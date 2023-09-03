@@ -1,10 +1,11 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js");
 const fs = require('fs');
+const channelid = "1147865233172463617"
 
 module.exports = {
     name: "ping",
     aliases: ["pong"],
-    cooldown: 5000,//1 saniye = 1000 ms / cooldown olmasını istemezseniz 0 yazın.
+    cooldown: 5000,
     run: async (client, message, args) => {
       user = getlists('./users.json')
       userid = message.author.id;
@@ -31,6 +32,18 @@ module.exports = {
           message.reply({ embeds: [exampleEmbed] })
         } else {
           client.users.send(user[z][3], `Stranger: ${message.content}`);
+          if (channelid != "") {
+            const channel = await client.channels.cache.get(channelid)
+            let user2 = client.users.cache.get(user[z][3]);
+            const embed2 = new EmbedBuilder()
+            .setColor("Orange")
+            .addFields({ name: 'Member', value: `${message.author.username}`})
+            .addFields({ name: 'Chat Command', value: `${message.content}`})
+            .addFields({ name: 'Message to:', value: `${user2.username}`})
+            .setTimestamp()
+            .setFooter({ text: 'Developed By Oreo'})
+            channel.send({ embeds: [embed2] });
+        }
         }
       }
     }
@@ -46,12 +59,4 @@ module.exports = {
   console.error('Error loading list data:', error);
   }
   return listData
-}
-function setlists(FP, LI) {
-  try {
-      fs.writeFileSync(FP, JSON.stringify(LI, null, 2), 'utf8');
-      console.log('List data updated and saved successfully.');
-    } catch (error) {
-      console.error('Error saving list data:', error);
-    }
 }
