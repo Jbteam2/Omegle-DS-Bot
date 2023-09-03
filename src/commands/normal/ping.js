@@ -5,7 +5,7 @@ const config = require("../../config.js");
 module.exports = {
     name: "ping",
     aliases: ["pong"],
-    cooldown: 5000,
+    cooldown: 500,
     run: async (client, message, args) => {
       user = getlists('./users.json')
       userid = message.author.id;
