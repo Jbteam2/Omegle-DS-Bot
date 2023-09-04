@@ -2,7 +2,6 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js");
 const fs = require('fs');
 const config = require("../../config.js");
 const { Collection } = require('@discordjs/collection');
-const { start } = require("repl");
 
 module.exports = {
     name: "ping",
