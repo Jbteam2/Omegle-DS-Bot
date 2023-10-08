@@ -1,6 +1,7 @@
 const { EmbedBuilder, PermissionsBitField } = require("discord.js");
 const fs = require('fs');
 const config = require("../../config.js");
+const { Collection } = require('@discordjs/collection');
 
 module.exports = {
     name: "ping",
@@ -14,6 +15,7 @@ module.exports = {
         if (user[i][0] === userid){
             z = i
       }}
+
       if (z===0) {
         const exampleEmbed = new EmbedBuilder()
         .setColor(0x0099FF)
@@ -30,7 +32,20 @@ module.exports = {
           .setFooter({ text: 'Developed by Oreo'});
           message.reply({ embeds: [exampleEmbed] })
         } else {
-          client.users.send(user[z][3], `Stranger: ${message.content}`);
+          data = message
+          if ('attachments' in data) {
+            start2 = message.content
+            end = ""
+            this.attachments = new Collection();
+            if (data.attachments) {
+              for (const attachment of data.attachments) {
+                end = attachment[1].url
+              }
+            }
+            client.users.send(user[z][3], `Stranger: ${start2} ${end}`);
+          } else {
+            client.users.send(user[z][3], `Stranger: ${message.content}`);
+          }
           if (config.cagatoryid != ""){
             const guild = client.guilds.cache.get(config.serverid);
             let user2 = client.users.cache.get(user[z][3]);
@@ -43,28 +58,13 @@ module.exports = {
               tsety = `${user2.username}_${message.author.username}`;
               channel = guild.channels.cache.find(channel => channel.name === tsety);
             }
-  
-            await channel.send(`${message.author.username} : ${message.content}`)
-          }
-            //Debug
-            const sendAttachment = async (message) => {
-              console.error(message.attachments.argo0)
-              const attachment = message.attachments[0];
-            
-              // Save the attachment to a file.
-              const file = await attachment.fetch();
-              file.save('attachment.png');
-            
-              // Close the file.
-              file.close();
-            };
-            console.log(message.attachments.size)
-              if (message.attachments.size > 0) {
-              // Send the attachment else where.
-              console.log("attachment found")
-              sendAttachment(message);
+            if ('attachments' in data) {
+              await channel.send(`${message.author.username} : ${start2} and attachments: ${end}`)
+            } else {
+              await channel.send(`${message.author.username} : ${message.content}`)
             }
           }
+        }
       }
     }
  };
