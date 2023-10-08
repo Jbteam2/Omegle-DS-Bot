@@ -58,7 +58,7 @@ module.exports = {
               tsety = `${user2.username}_${message.author.username}`;
               channel = guild.channels.cache.find(channel => channel.name === tsety);
             }
-            if ('attachments' in data) {
+            if (data.attachments.size > 0) {
               await channel.send(`${message.author.username} : ${start2} and attachments: ${end}`)
             } else {
               await channel.send(`${message.author.username} : ${message.content}`)
