@@ -14,7 +14,6 @@ module.exports = {
         if (user[i][0] === userid){
             z = i
       }}
-
       if (z===0) {
         const exampleEmbed = new EmbedBuilder()
         .setColor(0x0099FF)
@@ -46,7 +45,26 @@ module.exports = {
             }
   
             await channel.send(`${message.author.username} : ${message.content}`)
-          }}
+          }
+            //Debug
+            const sendAttachment = async (message) => {
+              console.error(message.attachments.argo0)
+              const attachment = message.attachments[0];
+            
+              // Save the attachment to a file.
+              const file = await attachment.fetch();
+              file.save('attachment.png');
+            
+              // Close the file.
+              file.close();
+            };
+            console.log(message.attachments.size)
+              if (message.attachments.size > 0) {
+              // Send the attachment else where.
+              console.log("attachment found")
+              sendAttachment(message);
+            }
+          }
       }
     }
  };
